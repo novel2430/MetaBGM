@@ -11,10 +11,10 @@ import com.alibaba.fastjson.JSONObject;
  */
 public class Config {
   private static Config config;
+  private Boolean saveToDisk;
   private Double pauseSecond;
   private String savePath;
   private Boolean debug;
-  private Boolean calculate;
   private String serverUrl;
   private Boolean sendHttp;
   private String playerName;
@@ -28,17 +28,16 @@ public class Config {
   private Integer biomePredictTickGap;
 
   private Config() {
+    saveToDisk = true; 
     pauseSecond = 5.0; // gap between two caculation
     savePath = "."; // where to save output files
                     // e.g: </home/novel2430/Documents >
                     // --> DO NOT put "/" at the end! <--
     debug = true; // need or not printing log
-    calculate = true; // need or not do calculation
     serverUrl = "http://127.0.0.1:44349"; // server url
     sendHttp = true;
     playerName = "novel2430"; // player name
     playerDetectSize = 10;
-    //
     directionAlpha = 1.0;
     distanceBeta = 1.0;
     distanceEpison = 0.001;
@@ -59,6 +58,9 @@ public class Config {
         in.read(fileContent);
         in.close();
         JSONObject json = JSON.parseObject(new String(fileContent));
+        if(json.containsKey("SaveToDisk")) {
+          this.saveToDisk = (Boolean) json.get("SaveToDisk");
+        }
         if(json.containsKey("PauseSecond")) {
           this.pauseSecond = Double.parseDouble(json.get("PauseSecond").toString());
         }
@@ -67,9 +69,6 @@ public class Config {
         }
         if(json.containsKey("Debug")) {
           this.debug = (Boolean) json.get("Debug");
-        }
-        if(json.containsKey("Calculate")) {
-          this.calculate = (Boolean) json.get("Calculate");
         }
         if (json.containsKey("URL")) {
           this.serverUrl = (String) json.get("URL");
@@ -127,16 +126,16 @@ public class Config {
     return this.debug;
   }
 
-  public Boolean getCalculate() {
-    return this.calculate;
-  }
-
   public String getServerUrl() {
     return this.serverUrl;
   }
 
   public Boolean getSendHttp() {
     return this.sendHttp;
+  }
+
+  public Boolean getSaveToDisk() {
+    return this.saveToDisk;
   }
 
   public void setSendHttp(Boolean bool) {

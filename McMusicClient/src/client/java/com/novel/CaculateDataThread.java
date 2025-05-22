@@ -33,7 +33,7 @@ public class CaculateDataThread implements Runnable {
     // List<PlayerSnapshot> buffer = new ArrayList<>();
     long startTime = System.currentTimeMillis();
 
-    while (Config.get().getCalculate() && Util.isGameRunning()) {
+    while (Util.isGameRunning()) {
       if (System.currentTimeMillis() - startTime > Config.get().getPauseSec() * 1000) {
         if(FrameDataBuffer.getPushCount() > 0){
           Util.printLog("=== Calculate ! ===");
@@ -43,7 +43,8 @@ public class CaculateDataThread implements Runnable {
           // Print Log
           Util.printLog(calculateData.toJSONString());
           // Write to Disk
-          // writeFile(startDateTime + "-" + Integer.toString(currentIndex) + ".json", calculateData);
+          if(Config.get().getSaveToDisk())
+            writeFile(startDateTime + "-" + Integer.toString(currentIndex) + ".json", calculateData);
           // Http Update
           Util.httpAddPlayerData(startDateTime, calculateData);
           // Clean
