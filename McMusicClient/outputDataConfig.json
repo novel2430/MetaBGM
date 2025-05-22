@@ -1,0 +1,14 @@
+{
+  "PauseSecond": 10.0,
+  "SavePath": ".", 
+  "Debug": true,
+  "Calculate": true,
+  "URL": "http://127.0.0.1:44349",
+  "PlayerName": "novel2430",
+  "DetectSize": 20,
+  "BiomePredictDirectionAlpha": 1.0,
+  "BiomePredictDistanceBeta": 1.0,
+  "BiomePredictDetectSize": 40,
+  "BiomePredictSampleRate": 2,
+  "BiomePredictTickInterval": 20 
+}
